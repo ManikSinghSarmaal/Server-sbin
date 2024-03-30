@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Classification</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(ellipse at center, #222222, #111111);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 1s;
+        }
+
+        h1 {
+            color: #00e6e6;
+            text-shadow: 0 0 10px rgba(0, 230, 230, 0.5);
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            animation: glowingBorder 2s infinite;
+        }
+
+        .image-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group input[type="file"] {
+            display: none;
+        }
+
+        .form-group label {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #00e6e6;
+            color: #000000;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 230, 230, 0.5);
+            animation: glowingLabel 2s infinite;
+            font-size: 1.2rem;
+        }
+
+        .form-group label:hover {
+            background-color: #00b3b3;
+        }
+
+        button {
+            background-color: #00e6e6;
+            color: #000000;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 230, 230, 0.5);
+            animation: glowingLabel 2s infinite;
+            font-size: 1.2rem;
+        }
+
+        button:hover {
+            background-color: #00b3b3;
+        }
+
+        #prediction {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00e6e6;
+            text-shadow: 0 0 10px rgba(0, 230, 230, 0.5);
+            margin-top: 30px;
+        }
+
+        @keyframes glowingBorder {
+            0% {
+                box-shadow: 0 0 30px rgba(0, 230, 230, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 60px rgba(0, 230, 230, 0.6);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(0, 230, 230, 0.3);
+            }
+        }
+
+        @keyframes glowingLabel {
+            0% {
+                box-shadow: 0 0 20px rgba(0, 230, 230, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(0, 230, 230, 0.6);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(0, 230, 230, 0.3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container animate__animated">
+        <h1 class="animate__animated animate__fadeInDown">Smart Bin</h1>
+        <div class="image-container">
+            <img id="imagePreview" src="#" alt="Image Preview" class="image-preview" />
+        </div>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="imageInput" class="animate__animated animate__pulse animate__infinite">Choose Image</label>
+                <input type="file" name="image" accept="image/*" id="imageInput" />
+            </div>
+            <button type="submit" class="animate__animated animate__pulse animate__infinite">Predict </button>
+        </form>
+        <div id="prediction" class="animate__animated animate__fadeInUp"></div>
+    </div>
+
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('imagePreview').src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const response = await fetch("/predict", {
+                method: "POST",
+                body: formData,
+            });
+            const data = await response.json();
+            if (data.predicted_class) {
+                document.getElementById("prediction").textContent = `This Trash is: ${data.predicted_class}`;
+            } else if (data.error) {
+                document.getElementById("prediction").textContent = `Error: ${data.error}`;
+            } else {
+                document.getElementById("prediction").textContent = "No prediction made.";
+            }
+        }
+
+        document.querySelector("form").addEventListener("submit", handleSubmit);
+    </script>
+</body>
+</html>
