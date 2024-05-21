@@ -22,3 +22,20 @@ git clone https://github.com/your-username/trash-classification-app.git
 ```
 cd trash-classification-app
 ```
+# Usage
+
+1. Start the FastAPI server:
+```uvicorn main:app --reload```
+2. Open your web browser and navigate to http://localhost:8000.
+3. Click the "Choose File" button and select an image of trash.
+4. Click the "Predict Class" button to get the predicted class for the uploaded image.
+
+# Customizations
+You can customize the project by modifying the following files:
+
+1. model.py: Update the model loading and preprocessing steps according to your requirements.
+2. main.py: Modify the FastAPI routes or add new functionality as needed.
+3. index.html: Customize the user interface by editing the HTML and JavaScript code.
+
+# Live Server
+![Your interface should look like this]([https://drive.google.com/file/d/1JB-0n4CyOyz5nyu0GE0MWU-rwo6AUBYJ/view?usp=share_link])
