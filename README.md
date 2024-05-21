@@ -38,4 +38,4 @@ You can customize the project by modifying the following files:
 3. index.html: Customize the user interface by editing the HTML and JavaScript code.
 
 # Live Server
-![Your interface should look like this]([Images])
+![Your interface should look like this]([Images/sbin.png])
