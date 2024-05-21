@@ -1,59 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Image Classification</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <title>Trash Classifier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
-
         body {
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(to bottom right, #1a1a1a, #333333);
+            font-family: 'Poppins', sans-serif;
+            background-color: #1c1c1c;
             color: #ffffff;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
+            align-items: flex-start;
+            min-height: 100vh;
             margin: 0;
-            overflow: hidden;
+            padding: 20px;
+            background-image: url('trash-background.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         .container {
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 30px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
             width: 100%;
             text-align: center;
-            animation: fadeInUp 1s;
         }
 
         h1 {
-            color: #00ff9f;
-            text-shadow: 0 0 10px rgba(0, 255, 159, 0.5);
+            color: #00e676;
+            font-size: 36px;
             margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
         }
 
         .image-container {
             position: relative;
             width: 100%;
-            padding-top: 75%;
-            margin-bottom: 20px;
+            max-height: 500px;
+            margin-bottom: 30px;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            animation: glowingBorder 2s infinite;
         }
 
         .image-preview {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         .form-group {
@@ -67,82 +66,86 @@
         .form-group label {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #00ff9f;
-            color: #000000;
+            background-color: #00e676;
+            color: #1c1c1c;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 159, 0.5);
-            animation: glowingLabel 2s infinite;
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
         }
 
         .form-group label:hover {
-            background-color: #00cc7f;
+            background-color: #00c96b;
         }
 
         button {
-            background-color: #00ff9f;
-            color: #000000;
+            background-color: #00e676;
+            color: #1c1c1c;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 159, 0.5);
-            animation: glowingLabel 2s infinite;
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
         }
 
         button:hover {
-            background-color: #00cc7f;
+            background-color: #00c96b;
         }
 
         #prediction {
             font-size: 1.2em;
             font-weight: bold;
-            color: #00ff9f;
-            text-shadow: 0 0 10px rgba(0, 255, 159, 0.5);
+            color: #00e676;
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
             margin-top: 20px;
         }
 
-        @keyframes glowingBorder {
-            0% {
-                box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(0, 255, 159, 0.6);
-            }
-            100% {
-                box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
-            }
+        #about, #journey, #contributors {
+            text-align: left;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes glowingLabel {
-            0% {
-                box-shadow: 0 0 10px rgba(0, 255, 159, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 20px rgba(0, 255, 159, 0.6);
-            }
-            100% {
-                box-shadow: 0 0 10px rgba(0, 255, 159, 0.3);
-            }
+        #contributors {
+            margin-top: 20px;
+            font-style: italic;
+            color: #00e676;
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
         }
     </style>
 </head>
 <body>
-    <div class="container animate__animated">
-        <h1 class="animate__animated animate__fadeInDown">Trash Classifier</h1>
+    <div class="container">
+        <h1>Trash Classifier</h1>
         <div class="image-container">
             <img id="imagePreview" src="#" alt="Image Preview" class="image-preview" />
         </div>
         <form action="/predict" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="imageInput" class="animate__animated animate__pulse animate__infinite">Choose Image</label>
+                <label for="imageInput">Choose Image</label>
                 <input type="file" name="image" accept="image/*" id="imageInput" />
             </div>
-            <button type="submit" class="animate__animated animate__pulse animate__infinite">Predict Class</button>
+            <button type="submit">Predict Class</button>
         </form>
-        <div id="prediction" class="animate__animated animate__fadeInUp"></div>
+        <div id="prediction"></div>
+        <div id="about">
+            <h2>About</h2>
+            <p>This project is a trash classifier built using FastAPI and a pre-trained VGG16 model. It allows users to upload an image, and the model will predict whether the trash in the image is inorganic, organic, or metal.</p>
+            <p>Our journey started with a passion for sustainable living and a desire to contribute to a cleaner environment. We believe that proper waste management is crucial for a healthier planet, and this project is our small contribution towards that goal.</p>
+            <p>We hope that this tool will help raise awareness about the importance of proper waste segregation and encourage people to make more conscious decisions about their waste disposal.</p>
+        </div>
+        <div id="journey">
+            <h2>Our Journey</h2>
+            <p>Our journey started with a simple idea: to create a tool that could help people make more informed decisions about their waste disposal. As we delved deeper into the project, we realized the importance of raising awareness about proper waste segregation and its impact on the environment.</p>
+            <p>Throughout the development process, we faced numerous challenges, from understanding the intricacies of machine learning models to optimizing our code for better performance. However, our determination and passion for the cause kept us going.</p>
+            <p>We spent countless hours researching, coding, and testing, and it was all worth it when we finally saw our project come to life. Seeing people use our tool and making more conscious decisions about their waste disposal filled us with a sense of accomplishment and pride.</p>
+            <p>This project has been a journey of growth, learning, and making a positive impact on the world around us. We hope that our efforts will inspire others to take action and contribute to a cleaner and more sustainable future.</p>
+        </div>
+        <div id="contributors">Contributors: Manik Singh Sarmaal, Darsh, Mohmad Ali</div>
     </div>
 
     <script>

@@ -25,7 +25,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu" # Set device
 
 @app.get("/")
 async def form(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request}) # Render the form
+    return templates.TemplateResponse("futuristic.html", {"request": request}) # Render the form
 
 @app.post("/predict")
 async def predict_class(image: UploadFile = File(...)):
