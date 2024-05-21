@@ -38,4 +38,4 @@ You can customize the project by modifying the following files:
 3. index.html: Customize the user interface by editing the HTML and JavaScript code.
 
 # Live Server
-![Your interface should look like this]([https://drive.google.com/file/d/1JB-0n4CyOyz5nyu0GE0MWU-rwo6AUBYJ/view?usp=share_link])
+![Your interface should look like this]([Images])
