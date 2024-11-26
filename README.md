@@ -15,7 +15,7 @@ This project is a web application that uses a yolov8 model refer to this repo [h
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/trash-classification-app.git
+git clone https://github.com/ManikSinghSarmaal/Server-sbin.git
 ```
 
 2. Navigate to the project directory:
